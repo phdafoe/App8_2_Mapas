@@ -32,6 +32,11 @@ class ICOMapViewController: UIViewController, CLLocationManagerDelegate, MKMapVi
         locationManager.requestAlwaysAuthorization()
         locationManager.startUpdatingLocation() // Inicio de la actualizacion de la localizacion
         
+        // Fase 3 -> de Creacion de una chincheta
+        let longPressGestureRecognizer = UILongPressGestureRecognizer(target: self, action: "actionPressDisplay:")
+        longPressGestureRecognizer.minimumPressDuration = 2
+        mySecondMap.addGestureRecognizer(longPressGestureRecognizer)
+        
         
         
         // Do any additional setup after loading the view, typically from a nib.
@@ -49,10 +54,32 @@ class ICOMapViewController: UIViewController, CLLocationManagerDelegate, MKMapVi
         
         print(locations[0])
         
+        // Fase 2 ->
+        let userLocation : CLLocation = locations[0]
+        let latitude = userLocation.coordinate.latitude
+        let longitude = userLocation.coordinate.longitude
+        let latDelta : CLLocationDegrees = 0.01
+        let longDelta : CLLocationDegrees = 0.01
+        let coordinate : CLLocationCoordinate2D = CLLocationCoordinate2DMake(latitude, longitude)
+        let span : MKCoordinateSpan = MKCoordinateSpanMake(latDelta, longDelta)
+        let region : MKCoordinateRegion = MKCoordinateRegionMake(coordinate, span)
+        
+        mySecondMap.setRegion(region, animated: true)
+    
+    }
+    
+    
+    //MARK: - UTILS
+    
+    // FAse 3 ->
+    func actionPressDisplay(gestureRecognizer: UIGestureRecognizer){
+        
+        
+        
         
         
     }
-
+    
 
 }
 
